@@ -6,7 +6,7 @@
 
 # 仿真结果
 
-![image-20230514220836497](C:/Users/BigPig/AppData/Roaming/Typora/typora-user-images/image-20230514220836497.png)
+![simulate](simulate.png)
 
 # 版本更新
 

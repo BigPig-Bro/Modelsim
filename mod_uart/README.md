@@ -1,4 +1,4 @@
-# Mod-seg
+# Mod-uart
 
 **描述**：简单的串口发送时序仿真
 
@@ -6,7 +6,7 @@
 
 # 仿真结果
 
-![image-20230514224817604](C:/Users/BigPig/AppData/Roaming/Typora/typora-user-images/image-20230514224817604.png)
+![simulate](simulate.png)
 
 # 版本更新
 
