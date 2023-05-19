@@ -3,7 +3,6 @@ module median_filter_3x3(
     input       rst_n,
     input       median_frame_vsync,
     input       median_frame_href,
-    input       median_frame_clken,
    
     input [7:0]  data11, 
     input [7:0]  data12, 
@@ -17,8 +16,7 @@ module median_filter_3x3(
    
     output [7:0] target_data,
     output       pos_median_vsync,
-    output       pos_median_href,
-    output       pos_median_clken
+    output       pos_median_href
 );
 
 
@@ -126,7 +124,6 @@ end
 //reg define
 reg     [ 1 : 0]    median_frame_vsync_r;
 reg     [ 1 : 0]    median_frame_href_r;
-reg     [ 1 : 0]    median_frame_clken_r;
 
 
 //*****************************************************
@@ -135,7 +132,6 @@ reg     [ 1 : 0]    median_frame_clken_r;
 
 assign  pos_median_vsync    =   median_frame_vsync_r[1];
 assign  pos_median_href     =   median_frame_href_r [1];
-assign  pos_median_clken    =   median_frame_clken_r[1];
 assign  target_data         =   median_value;
 
 //延迟三个周期进行同步
@@ -143,12 +139,10 @@ always@(posedge clk or negedge rst_n)begin
     if(!rst_n)begin
         median_frame_vsync_r <= 0;
         median_frame_href_r  <= 0;
-        median_frame_clken_r <= 0;
     end
     else begin
         median_frame_vsync_r <= {median_frame_vsync_r[0],median_frame_vsync};
         median_frame_href_r  <= {median_frame_href_r [0], median_frame_href};
-        median_frame_clken_r <= {median_frame_clken_r[0],median_frame_clken};
     end
 end
 
