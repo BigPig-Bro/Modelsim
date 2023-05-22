@@ -22,7 +22,7 @@ reg rst_n = 0;
 integer i;
 
 reg  [3:0]		frame_cnt = 'd0; //帧计数
-parameter   	FRAME_READ = 1; //读取帧编号
+parameter   	FRAME_READ = 1; //读取帧编号 从 1开始
 //---------------------------------------------
 initial begin
 	//打开输入BMP图片
@@ -91,8 +91,8 @@ cmos_cam cmos_cam_m0(
 	.cmos_index 		(cmos_index			)
 );
 
-always@(posedge clk or negedge rst_n)  
-	cmos_data    <=  {rBmpData[cmos_index][7:3], rBmpData[cmos_index + 1][7:2], rBmpData[cmos_index + 2][7:3]};
+always@(posedge clk or negedge rst_n)  //将BGR 改为 RGB
+	cmos_data    <=  {rBmpData[cmos_index + 2][7:3], rBmpData[cmos_index + 1][7:2], rBmpData[cmos_index][7:3]};
 
 /********************************************************************************/
 /************************       用户逻辑时序        *****************************/
@@ -145,8 +145,13 @@ always@(posedge clk or negedge rst_n)
    else if(frame_cnt == FRAME_READ) 
         if(out_de) begin
             out_cnt <=  out_cnt + 3;
-            res_data[out_cnt+0] <= out_img_R;
+            res_data[out_cnt+0] <= out_img_B;
             res_data[out_cnt+1] <= out_img_G;
-            res_data[out_cnt+2] <= out_img_B;
+            res_data[out_cnt+2] <= out_img_R;
         end
+
+//打印进度
+always@(posedge clk )
+	if(out_cnt / 3 / iBmpWidth * 100 / iBmpHight %10 == 0 && out_cnt / 3 % iBmpWidth == 1)
+		$display("progress: %d%%",out_cnt/3 / iBmpWidth * 100 / iBmpHight);
 endmodule 

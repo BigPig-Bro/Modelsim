@@ -93,7 +93,7 @@ always@(posedge clk or negedge rst_n)begin
        cmos_index   <=  0;
    end
    else begin
-       cmos_index   <=  y_pos * H_ACTIVE * 3  + x_pos * 3 + 54; 
+       cmos_index   <=  (V_ACTIVE - 1 - y_pos) * H_ACTIVE * 3  + x_pos * 3 + 54; 
    end
 end
 

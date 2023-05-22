@@ -91,8 +91,8 @@ cmos_cam cmos_cam_m0(
 	.cmos_index 		(cmos_index			)
 );
 
-always@(posedge clk or negedge rst_n)  
-	cmos_data    <=  {rBmpData[cmos_index][7:3], rBmpData[cmos_index + 1][7:2], rBmpData[cmos_index + 2][7:3]};
+always@(posedge clk or negedge rst_n)  // 将BGR改为RGB输出
+	cmos_data    <=  {rBmpData[cmos_index + 2][7:3], rBmpData[cmos_index + 1][7:2], rBmpData[cmos_index][7:3]};
 
 /********************************************************************************/
 /************************       用户逻辑时序        *****************************/
@@ -146,9 +146,9 @@ always@(posedge clk or negedge rst_n)
    else if(frame_cnt == FRAME_READ) 
         if(out_de) begin
             out_cnt <=  out_cnt + 3;
-            res_data[out_cnt+0] <= out_img_R;
-            res_data[out_cnt+1] <= out_img_G;
-            res_data[out_cnt+2] <= out_img_B;
+            res_data[iBmpSize - (out_cnt+0)] <= out_img_B;
+            res_data[iBmpSize - (out_cnt+1)] <= out_img_G;
+            res_data[iBmpSize - (out_cnt+2)] <= out_img_R;
         end
 
 //打印进度
