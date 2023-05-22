@@ -26,7 +26,7 @@ parameter   	FRAME_READ = 1; //读取帧编号 从 1开始
 //---------------------------------------------
 initial begin
 	//打开输入BMP图片
-	iBmpFileId      = $fopen("D:/Users/HUIP/Desktop/img_median/test.bmp","rb");	
+	iBmpFileId      = $fopen("./test.bmp","rb");	
 	if(iBmpFileId)	$display("open input file success");
 	else			$display("open input file fail");
 
@@ -47,7 +47,7 @@ always@(posedge clk) begin
 	//延迟，等待第一帧处理结束
 	if(frame_cnt == FRAME_READ + 1) begin  	
 		//打开输出BMP图片
-		oBmpFileId = $fopen("D:/Users/HUIP/Desktop/img_median/median.bmp","wb+");	
+		oBmpFileId = $fopen("./median.bmp","wb+");	
 		if(oBmpFileId)	$display("open output file success");
 		else			$display("open output file fail");
 
